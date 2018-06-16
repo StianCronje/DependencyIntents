@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CoreGraphics;
 using DependencyIntents.Controls;
 using DependencyIntents.iOS.Controls;
 using Foundation;
@@ -21,22 +22,31 @@ namespace DependencyIntents.iOS.Controls
                 {"Lyft", new NSUrl($"lyft://?destination[latitude]={latitude}&destination[longitude]={longitude}")}
             };
 
+            var window = UIApplication.SharedApplication.KeyWindow;
+
+
             var alert = UIAlertController.Create(title, null, UIAlertControllerStyle.ActionSheet);
+            if (alert.PopoverPresentationController != null)
+            {
+                alert.PopoverPresentationController.PermittedArrowDirections = 0;
+                alert.PopoverPresentationController.SourceView = window;
+                alert.PopoverPresentationController.SourceRect = window.Frame;
+            }
 
             foreach (var uri in uriDict)
             {
                 if (UIApplication.SharedApplication.CanOpenUrl(uri.Value))
                 {
-                var action = UIAlertAction.Create(uri.Key.ToString(), UIAlertActionStyle.Default,
-                    (s) => { UIApplication.SharedApplication.OpenUrl(uri.Value); });
-                alert.AddAction(action);
+                    var action = UIAlertAction.Create(uri.Key.ToString(), UIAlertActionStyle.Default,
+                        (s) => { UIApplication.SharedApplication.OpenUrl(uri.Value); });
+                    alert.AddAction(action);
                 }
             }
 
             var cancelAction = UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null);
             alert.AddAction(cancelAction);
 
-            var controller = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            var controller = window.RootViewController;
             controller.PresentViewController(alert, true, null);
 
         }
