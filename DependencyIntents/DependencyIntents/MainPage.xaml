@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DependencyIntents"
+             x:Class="DependencyIntents.MainPage">
+
+    <StackLayout>
+        <!-- Place new controls here -->
+    	<Label Text="Welcome to Xamarin.Forms Dependency Service tester." 
+           HorizontalOptions="Center"
+           VerticalOptions="Center" />
+        <Button Text="Open Location App" BorderRadius="15" Clicked="GeoClicked"/>
+        <Entry x:Name="shareEntry" Text="Example share text!"/>
+        <Button Text="Share" BackgroundColor="White"  Clicked="ShareClicked"/>
+        
+    </StackLayout>
+
+</ContentPage>
